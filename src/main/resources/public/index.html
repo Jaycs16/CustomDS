@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Doc</title>
+
+</head>
+<body>
+        <h1 >Test CustomDS</h1>
+        <h2 id="headingElement"></h2>
+
+        <button onclick="addItem()">Add</button> <input id="inputBoxAdd"><br>
+        <br>
+        <button onclick="deleteItem()">Delete</button> <input id="inputBoxDelete"><br>
+        <br>
+        <button>Random</Button>
+        <button onclick="allItem()">All Items</button>
+        <button id="allDistinctItem">Distinct Items</button>
+        <h2 id="refHeadigDislayAllItem">List is empty Now.</h2>
+        
+        <script>
+            //take reference of the all Input Fields from UI
+            const refInputAdd = document.querySelector("#inputBoxAdd");
+            const refInputDelete = document.querySelector("#inputBoxDelete");
+            const refallItem = document.querySelector("#allItem");
+            const refallDistinctItem = document.querySelector("#allDistinctItem");
+            const refheadingElement = document.querySelector("#headingElement");
+            const refHeadigDislayAllItem = document.querySelector("#refHeadigDislayAllItem");
+
+            const rootUrl = "http://localhost:8080/";
+        function addItem(){
+            //Convert input value to Integer
+            const inputIntegerAddValue = parseInt(refInputAdd.value,10);
+
+            //Call Add API using REST
+            fetch(rootUrl+`add?number=${inputIntegerAddValue}`).then(function(response){
+            return response.json();
+            }).then(function(json){
+            if(json===true){
+            refheadingElement.textContent = `Added : ${inputIntegerAddValue}`;
+            }
+            });
+
+        
+            
+        }
+        function deleteItem(){
+            //Convert input value to Integer
+            const inputIntegerDeleteValue = parseInt(refInputDelete.value,10);
+
+            //Call Add API using REST
+            fetch(rootUrl+`delete?number=${inputIntegerDeleteValue}`).then(function(response){
+            return response.json()
+            }).then(function(json){
+            if(json===true){
+            refheadingElement.textContent = `Deleted : ${inputIntegerDeleteValue}`;
+            }
+            });
+
+            
+        }
+        function allItem(){
+            //call AllItemAPI using REST
+            fetch(rootUrl+"allItem").then(function(response){
+                 return response.json();
+            }).then(function(json){
+            refHeadigDislayAllItem.textContent = `All Item : ${json}`;
+            });
+        }
+        </script>
+</body>
+</html>
